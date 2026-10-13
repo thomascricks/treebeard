@@ -1,0 +1,9 @@
+[Service]
+Type=oneshot
+Restart=no
+SupplementaryGroups=@TB_GROUP@
+ReadWritePaths=@TB_BASE@/backups @TB_BASE@/shared/status/moon.json @TB_BASE@/shared/memory/subconscious @TB_BASE@/shared/memory/longterm @TB_BASE@/shared/memory/dreams @TB_BASE@/shared/telemetry
+Environment=PYTHONDONTWRITEBYTECODE=1
+MemoryDenyWriteExecute=no
+ExecStart=
+ExecStart=@TB_BASE@/shared/venv/bin/python @TB_BASE@/moon/agent.py

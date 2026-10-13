@@ -1,0 +1,15 @@
+[Unit]
+Description=Daily Treebeard Sun digest at 6am Eastern
+Requires=treebeard-agent@sun.service
+
+[Timer]
+# Fires every day at 06:00 @TB_TZ@. systemd handles DST
+# automatically — same local time year-round.
+OnCalendar=*-*-* 06:00:00 @TB_TZ@
+# If the system was down at fire time, run as soon as possible after
+# boot — ensures we don't silently miss a day if the box reboots.
+Persistent=true
+Unit=treebeard-agent@sun.service
+
+[Install]
+WantedBy=timers.target

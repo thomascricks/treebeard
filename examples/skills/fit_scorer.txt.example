@@ -1,0 +1,52 @@
+# EXAMPLE knowledge-skill document (generic). Derived from the operator-tuned
+# original with profile-specific anchors replaced by <PLACEHOLDERS>. Copy to
+# $TREEBEARD_BASE/shared/toolbox/data/skills/<name>.txt and fill placeholders
+# from your own career profile before use.
+SKILL: fit_scorer (career_hunter package)
+CONSUMER: governed Han turn. INPUT: career_profile.txt + candidates.json
+from career_search. OUTPUT: per-job scores, evidence-based.
+
+PURPOSE
+Score each candidate job against THIS operator, not an abstract ideal
+applicant. Every score must cite which profile facts drove it. A score
+without cited evidence is invalid.
+
+DIMENSIONS -- score each 0-5, integer, with one line of evidence:
+  transferable_experience   does the operator's actual prior work (EXAMPLE:
+                            PM/PO/program/BA/writing) credibly
+                            map onto this role's real duties
+  qualification_match       would a screener reading the resume see the
+                            stated requirements credibly met (stretch is
+                            fine; fiction disqualifies the score, not the operator)
+  compensation_probability  likelihood the role clears the bands in the
+                            profile; use posted comp when present; UNKNOWN
+                            comp scores 3, never 0 (flag, don't discard)
+  work_location_fit         remote=5; <PRIMARY_CITY>/<COMMUTABLE_AREA> commutable hybrid=4;
+                            other hybrid=1; relocation required=0
+  interview_likelihood      honest odds of a first-round (if the profile
+                            marks a career change, apply the usual
+                            screener discount); index pages and
+                            600-applicant reposts score low
+  career_change_friction    inverse: 5 = uses the operator as-is, 0 = requires
+                            retraining or a credential the operator lacks
+  application_time_roi      value of the outcome x odds, divided by the
+                            effort the application demands (portals with
+                            essays score low unless the fit is exceptional)
+
+HARD RULES
+- previously_pursued companies: score normally but state the prior
+  pursuit; a DIFFERENT role at the same company is fair game.
+- company_flag entries (strong negative preference): cap total at MAYBE
+  tier unless evidence is exceptional; say why if you break the cap.
+- stale_evidence or source_tier 7-8: treat claims skeptically; an index
+  page or aggregator repost is NOT a live application target -- score
+  interview_likelihood accordingly and say so.
+- below-floor compensation: score honestly, FLAG in the evidence line,
+  never silently drop. If the profile declares an urgency rule, apply it
+  (EXAMPLE: credible fast-to-employment lateral roles are not
+  hard-rejected on pay).
+- Never invent job details not present in the candidate record; if the
+  record is too thin to score a dimension, score it 2 and mark THIN.
+
+OUTPUT per job: {"url", "total": 0-35, "scores": {<dim>: int}, 
+"evidence": {<dim>: "one line"}, "thin": bool}

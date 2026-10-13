@@ -1,0 +1,14 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     governor
+# Install:  $TREEBEARD_ETC/governor   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   REQUIRED (fail-closed)
+# Absent:   if unreadable or not exactly one valid agent name, the governor cannot be established and EVERY agent is denied model access.
+# Read by:  will.py (gate resolution; Will deferred, not in this release)
+# Values:   structural: one bare agent name
+# ===========================================================================
+# Canonical governor agent. ONE bare agent name, comments/blank lines ignored.
+# Independent of agent_policy.conf by design: the governor keeps all model-
+# routing gates even if ordinary-agent policy is malformed or unreadable.
+# If THIS file cannot be read or does not name exactly one valid agent, the
+# governor cannot be established and every agent is denied. No guessing.
+treebeard

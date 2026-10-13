@@ -1,0 +1,9 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     walls.conf
+# Install:  $TREEBEARD_ETC/walls.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL
+# Absent:   no walls; any agents may be convened together. Format per line: <agentA> <agentB> [except-meet]
+# Read by:  treebeard/meet.py
+# Values:   structural
+# ===========================================================================
+clark han except-meet

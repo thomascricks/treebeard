@@ -1,0 +1,9 @@
+[Unit]
+Description=Clark intake every 15 minutes
+Requires=treebeard-clark-intake.service
+[Timer]
+OnCalendar=*:00/15
+Persistent=false
+Unit=treebeard-clark-intake.service
+[Install]
+WantedBy=timers.target

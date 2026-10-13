@@ -1,0 +1,14 @@
+{
+  "approved_by": "operator",
+  "candidate_id": "123de9b6da66",
+  "depositor": "sun",
+  "files": {
+    "main.py": "0232dcb449225d06616f7252f78d01959c7865d68154ad713d82db4f7bde6e04",
+    "test_main.py": "3f4b8590454b5346a3bfbef5c8e5e620f5fdfd7ad501e3742528972842840d75"
+  },
+  "locked_by": "treebeard",
+  "locked_utc": "2026-07-03T01:49:11Z",
+  "manifest_hash": "123de9b6da668cd48cf1820b231f369ab036e450423c3441d61b1a9c0cdb1fc3",
+  "name": "evens",
+  "tier4_review": "pending (later phase)"
+}

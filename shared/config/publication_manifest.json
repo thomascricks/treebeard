@@ -1,0 +1,879 @@
+{
+ "v": 1,
+ "note": "S2-H9 publication allow-list. Literal entries only: type 'copy' (exact live source -> exact destination under the publish root) or type 'native' (exact path already authored under the publish root by H5-H7). No globs, no directory recursion. root 'base' = TREEBEARD_BASE (default /opt/treebeard); root 'etc' = TREEBEARD_ETC (default /etc/treebeard). A copy entry with 'link_target' is a symlink whose live target must equal link_target exactly. A copy entry with 'transform' names one narrowly bound publication-only transform implemented in publish_export.py; the transformed copy is a sanitized publication representation and is NOT valid for Anvil re-import or tamper verification (manifest_hash is deliberately left stale). Identity tokens are NOT listed here (this file is exported); the scanner reads them from the private shared/operator/persona_tokens.txt.",
+ "entries": [
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/affinity.py",
+   "dst": "shared/lib/affinity.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/agent_inbound.py",
+   "dst": "shared/lib/agent_inbound.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/board.py",
+   "dst": "shared/lib/board.py",
+   "reason": "sun/agent.py imports board"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/budget.py",
+   "dst": "shared/lib/budget.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/career_hunter_daily.py",
+   "dst": "shared/lib/career_hunter_daily.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/career_packets.py",
+   "dst": "shared/lib/career_packets.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_fit_review.py",
+   "dst": "shared/lib/clark_fit_review.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_forward_extractor.py",
+   "dst": "shared/lib/clark_forward_extractor.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_intake_driver.py",
+   "dst": "shared/lib/clark_intake_driver.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_patrol_driver.py",
+   "dst": "shared/lib/clark_patrol_driver.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_patrol.py",
+   "dst": "shared/lib/clark_patrol.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/clark_queue.py",
+   "dst": "shared/lib/clark_queue.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/cognition_tools.py",
+   "dst": "shared/lib/cognition_tools.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/constitution.py",
+   "dst": "shared/lib/constitution.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/decisions.py",
+   "dst": "shared/lib/decisions.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/dispatch.py",
+   "dst": "shared/lib/dispatch.py",
+   "reason": "ask.py records agent dispatch blocks"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/dispatch_exec.py",
+   "dst": "shared/lib/dispatch_exec.py",
+   "reason": "executes recorded dispatches after the turn"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/sms.py",
+   "dst": "shared/lib/sms.py",
+   "reason": "governed inter-agent messaging; meet.py F35 turn isolation and ask.py MESSAGES block depend on it (PO ruling 2026-08-31: public for RC4, supersedes the MVP-private ruling)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/dn_write.py",
+   "dst": "shared/lib/dn_write.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/draft_store.py",
+   "dst": "shared/lib/draft_store.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/dream_analysis.py",
+   "dst": "shared/lib/dream_analysis.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/dream.py",
+   "dst": "shared/lib/dream.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/governance_audit.py",
+   "dst": "shared/lib/governance_audit.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/hypotheses.py",
+   "dst": "shared/lib/hypotheses.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/longterm.py",
+   "dst": "shared/lib/longterm.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/ltm_clark.py",
+   "dst": "shared/lib/ltm_clark.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/meetmem.py",
+   "dst": "shared/lib/meetmem.py",
+   "reason": "meet.py enqueues meeting records; ask.py consolidates them"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/memscan.py",
+   "dst": "shared/lib/memscan.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/missions.py",
+   "dst": "shared/lib/missions.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/moon_retention.py",
+   "dst": "shared/lib/moon_retention.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/observations.py",
+   "dst": "shared/lib/observations.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/perf.py",
+   "dst": "shared/lib/perf.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/personality.py",
+   "dst": "shared/lib/personality.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/policy_regression.py",
+   "dst": "shared/lib/policy_regression.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/pricing.py",
+   "dst": "shared/lib/pricing.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/record_log.py",
+   "dst": "shared/lib/record_log.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/regression.py",
+   "dst": "shared/lib/regression.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/resume_parser.py",
+   "dst": "shared/lib/resume_parser.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/router.py",
+   "dst": "shared/lib/router.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/selection.py",
+   "dst": "shared/lib/selection.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/shortterm.py",
+   "dst": "shared/lib/shortterm.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/signals.py",
+   "dst": "shared/lib/signals.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/sprint1_regression.py",
+   "dst": "shared/lib/sprint1_regression.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/statusboard.py",
+   "dst": "shared/lib/statusboard.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/subconscious.py",
+   "dst": "shared/lib/subconscious.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/telemetry.py",
+   "dst": "shared/lib/telemetry.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/test_career_packets.py",
+   "dst": "shared/lib/test_career_packets.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/triage.py",
+   "dst": "shared/lib/triage.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/config/publication_manifest.json",
+   "dst": "shared/config/publication_manifest.json"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/config/retention.json",
+   "dst": "shared/config/retention.json"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "treebeard/ask.py",
+   "dst": "treebeard/ask.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "treebeard/harness.py",
+   "dst": "treebeard/harness.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "treebeard/hello.py",
+   "dst": "treebeard/hello.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "treebeard/meet.py",
+   "dst": "treebeard/meet.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "persona/decision_store.py",
+   "dst": "persona/decision_store.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "persona/persona_approve.py",
+   "dst": "persona/persona_approve.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "persona/persona_writer.py",
+   "dst": "persona/persona_writer.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "moon/agent.py",
+   "dst": "moon/agent.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "sun/agent.py",
+   "dst": "sun/agent.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/anvil/anvil.py",
+   "dst": "shared/anvil/anvil.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/anvil/anvil",
+   "dst": "shared/anvil/anvil",
+   "reason": "canonical invocation wrapper (H8)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/meeseeks/meeseeks.py",
+   "dst": "shared/meeseeks/meeseeks.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/meeseeks/meeseeks",
+   "dst": "shared/meeseeks/meeseeks",
+   "reason": "canonical invocation wrapper (H8)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/toolbox.py",
+   "dst": "shared/toolbox/toolbox.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/toolbox",
+   "dst": "shared/toolbox/toolbox",
+   "reason": "canonical invocation wrapper (H8)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/Containerfile",
+   "dst": "shared/toolbox/Containerfile"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/requirements-toolroom.lock",
+   "dst": "shared/toolbox/requirements-toolroom.lock"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/data/skills/tool_contract.md",
+   "dst": "shared/toolbox/data/skills/tool_contract.md"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/data/skills/pdf.md",
+   "dst": "shared/toolbox/data/skills/pdf.md"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/data/skills/pptx.md",
+   "dst": "shared/toolbox/data/skills/pptx.md"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolbox/data/skills/xlsx.md",
+   "dst": "shared/toolbox/data/skills/xlsx.md"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolkit/evens-123de9b6da66/main.py",
+   "dst": "shared/toolkit/evens-123de9b6da66/main.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolkit/evens-123de9b6da66/test_main.py",
+   "dst": "shared/toolkit/evens-123de9b6da66/test_main.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolkit/evens-123de9b6da66/MANIFEST.json",
+   "dst": "shared/toolkit/evens-123de9b6da66/MANIFEST.json",
+   "transform": "evens_manifest_approved_by"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/toolkit/evens",
+   "dst": "shared/toolkit/evens",
+   "link_target": "evens-123de9b6da66"
+  },
+  {
+   "type": "copy",
+   "root": "etc",
+   "src": "constitution.txt",
+   "dst": "etc/treebeard/constitution.txt"
+  },
+  {
+   "type": "copy",
+   "root": "etc",
+   "src": "treebeard.charter.txt",
+   "dst": "etc/treebeard/treebeard.charter.txt"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/walls.conf.example",
+   "sha256": "7a5d37808a7b3ebc667466e226a67129f1c110c6e0a878d3b39e0b305e6eb60d"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/memory_scopes.conf.example",
+   "sha256": "cceb194f93777240a4c5102b45bf3bd28565834a492c29d9ed35bb1fa595a43c"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/dream_sources.conf.example",
+   "sha256": "5305a89a57b3ef7d8f1e7b27ab2899909f212852d94148904c88e4c44212f055"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/subconscious.conf.example",
+   "sha256": "a1fa18274b8ec919c1a9c9f048b8091cd25f49f5866c0d708ec2fc9ad8b4b790"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/governor.example",
+   "sha256": "3ec6dc49c5564a2036447c54cca41013af5627aed7333ce4ea9c4caa61a0b9c9"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/agent_policy.conf.example",
+   "sha256": "a3aef2d946e6e1fb2b17a16972491d183da922617e64edd5576a367bd79683f7"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/routing.conf.example",
+   "sha256": "50bb6b6551681e08a3520ea085a1b43c003643eb782f2d76b406459c79b87199"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/sms_pairs.conf.example",
+   "sha256": "a43f8e76592ea624f1b418e26b33a21c2ffce02da29e5dbf72e343f07e76a2fe"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/model_profiles.toml.example",
+   "sha256": "7b3cc16e30b94a33cf308b46babc678aea8281c11f90901fecf08cf3b738f638"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/personality/clark.bounds.toml.example",
+   "sha256": "b224cd767ee6ebe0cebcdb4f2dbff3e1e842e7300a02a22c38c54e77c22fc556"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/personality/han.bounds.toml.example",
+   "sha256": "9d0bbd7633dec751247720b553996fa451fca73225ec0f0d334e544896188140"
+  },
+  {
+   "type": "native",
+   "path": "examples/etc/personality/treebeard.bounds.toml.example",
+   "sha256": "7d60a6dbaa8906ab924cb3cb5aca945741b8aad9357038a34f0fcdda4d4f2126"
+  },
+  {
+   "type": "native",
+   "path": "examples/credentials/providers.env.example",
+   "sha256": "c8b6581ece6de43fb3fbf9b821813e66b11ece0b81b73648b4f5102143cb7c3c"
+  },
+  {
+   "type": "native",
+   "path": "examples/skills/adjacent_career_mapper.txt.example",
+   "sha256": "ff137b585131c7ce237187d42e7319f5a8ae7f8ae8cc5681e4b18bffad655cd7"
+  },
+  {
+   "type": "native",
+   "path": "examples/skills/fit_scorer.txt.example",
+   "sha256": "2187c47544a018379a0e57e5278ca52323842bcc4ebca73d37ac62064dac666c"
+  },
+  {
+   "type": "native",
+   "path": "install/install.sh",
+   "sha256": "85bcc97e9959b5af6c4facf810608e6102a940d936ecf402a4f70c9627a49672"
+  },
+  {
+   "type": "native",
+   "path": "install/preflight.sh",
+   "sha256": "7299a228f563cefdb461e92b31f837abc10fdee7fae24419ca1c4025e9befafd"
+  },
+  {
+   "type": "native",
+   "path": "install/requirements.txt",
+   "sha256": "4855cf11a3bc52b13d75047f8479da304642d53943923f614dfcce79b338f00a"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-agent@.service.tmpl",
+   "sha256": "7a4cf9ba2c73aef61ad547eae945f4bf3fd0a5e69558d1e7104fd3e82764f206"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-agent@moon.service.d__override.conf.tmpl",
+   "sha256": "50afdcc8c741876eb9b5be80052bf8d64776306549bdb11ed8f41f75213d3a1f"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-agent@moon.timer.tmpl",
+   "sha256": "8307d485453e2ce0e256346c6e8a17e4204d29385c04eb129213d71733b075c9"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-agent@sun.service.d__override.conf.tmpl",
+   "sha256": "6dfbe4417da50f118ba299401869c146d1a301f11ea75819125368402cbe502d"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-agent@sun.timer.tmpl",
+   "sha256": "cd66b905374ad7d78edd00c77eddb5ff7a09bb647de74a7851d9994c64f6687c"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-career.service.tmpl",
+   "sha256": "dee6ad75661750fe364fd52676273561b5f0c51a1dce6e98185a935b6c618187"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-career.service.d__podman-runtime.conf.tmpl",
+   "sha256": "73d3b4f5c4dd2b7188f8badd8ab9b6606ad7470671f799afea5b319326fbf395"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-career.timer.tmpl",
+   "sha256": "b748cf39e77acf67bd2639f8a9734b9eca256cffd2a4286f29f9c94a1155b22c"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-clark-intake.service.tmpl",
+   "sha256": "ed379db8ed3ba06671676a2923bfe877c731b2aba8d3d9bd53bb88fbc53eb0fb"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-clark-intake.timer.tmpl",
+   "sha256": "aa4a92e93b6e2e96dc732dd83c93da18bc06809fecfdd082f90bf592bf7340be"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-clark-patrol.service.tmpl",
+   "sha256": "835d2151ea42f05da75c9513fccd58a75fc64dd9d5b1cb313539fee570991f31"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-clark-patrol.timer.tmpl",
+   "sha256": "01d6363990e07525de9a54874ba940cc4ae6351384f04412b8d17af1b4ff2b75"
+  },
+  {
+   "type": "native",
+   "path": "README.md",
+   "sha256": "fb7a3f4695bf74e869e669aa5a88f90b53fa8d0e9f63eb8cd814f21fba1bca25"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-reflector.service.tmpl",
+   "sha256": "11576ab5d12edbe551edf9e3ced1ed4b6dc203fc19605efdbe12498216b8b1d6"
+  },
+  {
+   "type": "native",
+   "path": "install/units/treebeard-reflector.timer.tmpl",
+   "sha256": "c2d36d20ea248bfc352fc468a49b1e013c5ba40a90fb31bccf75e1e6e29a5de9"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/reflector.py",
+   "dst": "shared/lib/reflector.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/test_reflector.py",
+   "dst": "shared/lib/test_reflector.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/test_reflector_unit.py",
+   "dst": "shared/lib/test_reflector_unit.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/test_board.py",
+   "dst": "shared/lib/test_board.py"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/uistate.py",
+   "dst": "shared/lib/uistate.py",
+   "reason": "UI-02 canonical state vocabulary; registered regression suite"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/opshell.py",
+   "dst": "shared/lib/opshell.py",
+   "reason": "UI-01 operator shell + attention computation"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/opsrv.py",
+   "dst": "shared/lib/opsrv.py",
+   "reason": "UI-01 read-only operator console (loopback only)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/boxread.py",
+   "dst": "shared/lib/boxread.py",
+   "reason": "D3(ii) RC5: in-turn box reads; imported by ask.py, sun/agent.py, test_board_lifecycle; registered suite 'boxread'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/opchat.py",
+   "dst": "shared/lib/opchat.py",
+   "reason": "D3(ii) RC5: web-path dispatch drain; top-level import of opsrv; registered suite 'opchat'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/agents.py",
+   "dst": "shared/lib/agents.py",
+   "reason": "D3(ii) RC5: agent registry; top-level import of opsrv and opchat; imported by sun/agent.py, sprint1_regression"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/devnotes.py",
+   "dst": "shared/lib/devnotes.py",
+   "reason": "D3(ii) RC5: dev-note read path; imported by ask.py; registered suite 'devnotes'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/threadctl.py",
+   "dst": "shared/lib/threadctl.py",
+   "reason": "D3(ii) RC5: thread control; imported by ask.py build_context"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/ask_contract.py",
+   "dst": "shared/lib/ask_contract.py",
+   "reason": "D3(ii) RC5: JSON turn contract; TOP-LEVEL import of clark_intake_driver; registered suite 'ask_contract'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/optmode.py",
+   "dst": "shared/lib/optmode.py",
+   "reason": "D3(ii) RC5: registered suite 'optmode'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/testrun.py",
+   "dst": "shared/lib/testrun.py",
+   "reason": "D3(ii) RC5: in-turn test runs; imported by ask.py and optmode; registered suite 'testrun'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/serpens.py",
+   "dst": "shared/lib/serpens.py",
+   "reason": "D3(ii) RC5: read-only web search; executed by dispatch_exec (DISPATCH_SERPENS default path)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/selector_regress.py",
+   "dst": "shared/lib/selector_regress.py",
+   "reason": "D3(ii) RC5: registered suite 'selector'; CONDITION: public harness must call it with --selftest (private corpus absent)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/lib/test_board_lifecycle.py",
+   "dst": "shared/lib/test_board_lifecycle.py",
+   "reason": "D3(ii) RC5: registered suite 'board_lifecycle'"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "persona/test_persona_writer_agent.py",
+   "dst": "persona/test_persona_writer_agent.py",
+   "reason": "D3(iv) RC5: persona writer agent test"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/meeseeks/github_search.py",
+   "dst": "shared/meeseeks/github_search.py",
+   "reason": "RC5 (new, import check): imported by meeseeks.py build_draft_prompt (unguarded)"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/meeseeks/test_github_search.py",
+   "dst": "shared/meeseeks/test_github_search.py",
+   "reason": "RC5 (new, import check): github_search tests"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/tbpolicy.py",
+   "dst": "shared/ctl/tbpolicy.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/tbreceipt.py",
+   "dst": "shared/ctl/tbreceipt.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/mission_writer.py",
+   "dst": "shared/ctl/mission_writer.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/lock_writer.py",
+   "dst": "shared/ctl/lock_writer.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/jail_launch.py",
+   "dst": "shared/ctl/jail_launch.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/jail_prep.py",
+   "dst": "shared/ctl/jail_prep.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/commission_op.py",
+   "dst": "shared/ctl/commission_op.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/ctl/board_writer.py",
+   "dst": "shared/ctl/board_writer.py",
+   "reason": "C1.4 (Option C): containment source; reaches /opt/treebeard/shared/ctl only through provisioning"
+  },
+  {
+   "type": "copy",
+   "root": "base",
+   "src": "shared/meeseeks/s3_verify_harness.py",
+   "dst": "shared/meeseeks/s3_verify_harness.py",
+   "reason": "C1.4: lock_writer's import"
+  },
+  {
+   "type": "native",
+   "path": "install/containment/tb-commission",
+   "sha256": "a5c853a9450ceef315abc9b176b1673a16dde668f33d097d5151fc061bb0b96e",
+   "reason": "C1.4/D10: authored at freeze from the live program; four-way equality at S6 step 0b"
+  },
+  {
+   "type": "native",
+   "path": "install/containment/board_ops.conf",
+   "sha256": "e92a1b33d9eef695adb657351b15da2fed297f91a60f4b03d93d50fbd54ed419",
+   "reason": "C1.4: the live /etc/treebeard/board_ops.conf (not under examples/etc: install.sh config would install it live)"
+  },
+  {
+   "type": "native",
+   "path": "install/provision-containment.sh",
+   "sha256": "ce55d42d018f7cb3b93504252b1e7715ea99b0d3aef5ab2b89384ebc9fa8716c",
+   "reason": "C2; operator ruling 2026-10-09 (D3 U4/U5 removed, U6 corrected) hash, proven: 24.04 classic 1.9.15p5 147/147, 26.04 classic 1.9.17p2 + sudo-rs 0.2.13 99/99"
+  },
+  {
+   "type": "native",
+   "path": "install/rollback-containment.sh",
+   "sha256": "0e20aeead67f83bae62f3acb14f603c4b74535da2e5bd60e782e44ec9b8c8fd9",
+   "reason": "C2.6; operator ruling 2026-10-09 (U4/U5 counterpart removed) hash, proven with provision-containment.sh"
+  },
+  {
+   "type": "native",
+   "path": "LICENSE",
+   "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+   "reason": "operator ruling 2026-10-13: license GPL-3.0-only (FSF canonical text)"
+  }
+ ]
+}

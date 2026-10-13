@@ -1,0 +1,34 @@
+[Unit]
+Description=Treebeard board<->Meeseeks reflector tick (S-BRIDGE-1)
+Documentation=file:@TB_BASE@/shared/lib/reflector.py
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=@TB_USER@
+Group=@TB_GROUP@
+WorkingDirectory=@TB_BASE@
+
+# EnvironmentFile FIRST, on purpose: the explicit Environment= lines below
+# must win over whatever the credential file happens to carry, so the
+# autonomous ladder is deterministic rather than incidental.
+EnvironmentFile=-@TB_ETC@/credentials/treebeard.env
+
+Environment=TREEBEARD_BASE=@TB_BASE@
+Environment=TASKBOARD_PATH=@TB_BASE@/shared/board/board.json
+Environment=MEESEEKS_ROOT=@TB_BASE@/shared/meeseeks/data
+Environment=MEESEEKS_LIB=@TB_BASE@/shared/lib
+Environment=MEESEEKS_ANVIL_DROPZONE=@TB_BASE@/shared/anvil/data/dropzones/treebeard
+
+# PINNED LADDER (PO ruling 3, 2026-08-31). These are the values interactive
+# `reflector start` has always used via the wrapper, and the values card 57
+# was produced under. The Python library defaults differ (local,free,cheap /
+# 5 / 24000); the timer path must not depend on which of the two it inherits.
+Environment=MEESEEKS_TIERS=free,cheap,cheap
+Environment=MEESEEKS_CYCLE_CAP=8
+Environment=MEESEEKS_PROMPT_CAP=32000
+
+# Control-plane budget, deliberately not MEESEEKS_RUN_MAX.
+Environment=REFLECTOR_TICK_STEPS=4
+
+ExecStart=@TB_BASE@/shared/venv/bin/python3 @TB_BASE@/shared/lib/reflector.py tick

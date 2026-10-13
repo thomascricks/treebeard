@@ -1,0 +1,27 @@
+{
+  "mode": "audit",
+  "report_dir": "/opt/treebeard/backups/retention",
+  "archive_root": "/opt/treebeard/backups/retention/archive",
+  "protected_prefixes": [
+    "/opt/treebeard/shared/operator/",
+    "/opt/treebeard/shared/config/",
+    "/opt/treebeard/shared/career/plan_lists.json"
+  ],
+  "roots": [
+    {"path": "/opt/treebeard/shared/career_clark/job_lockbox", "class": "lockbox"},
+    {"path": "/opt/treebeard/shared/career/job_lockbox", "class": "lockbox"},
+    {"path": "/opt/treebeard/shared/career_clark/reports", "class": "digest"},
+    {"path": "/opt/treebeard/shared/career/reports", "class": "digest"},
+    {"path": "/opt/treebeard/shared/career_clark/status", "class": "digest"},
+    {"path": "/opt/treebeard/shared/career/status", "class": "digest"},
+    {"path": "/opt/treebeard/shared/career_clark/patrol/status", "class": "digest"}
+  ],
+  "days": {
+    "draft_delete": 14,
+    "digest_archive": 45,
+    "digest_delete": 120,
+    "closed_archive": 30,
+    "closed_delete": 180,
+    "active_grace": 90
+  }
+}

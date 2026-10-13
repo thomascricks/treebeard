@@ -1,0 +1,50 @@
+# EXAMPLE knowledge-skill document (generic). Derived from the operator-tuned
+# original with profile-specific anchors replaced by <PLACEHOLDERS>. Copy to
+# $TREEBEARD_BASE/shared/toolbox/data/skills/<name>.txt and fill placeholders
+# from your own career profile before use.
+SKILL: adjacent_career_mapper (career_hunter package)
+CONSUMER: governed Han turn. INPUT: career_profile.txt. OUTPUT: JSON query plan.
+
+PURPOSE
+Translate the operator's real capabilities into credible lateral career
+families and posting-shaped search queries. Find roles the operator would
+not think to search for on their own. Credible means: a hiring manager reading
+the operator's resume could plausibly interview them. No fantasy
+qualifications; stretch is allowed, fiction is not.
+
+CAREER FAMILIES -- EXAMPLE set for a product/program-management background.
+Replace with families adjacent to YOUR profile. Search across families,
+not only the operator's current title.
+  program_management            program manager, portfolio, PMO lead
+  technology_governance         tech governance, IT governance, AI governance
+  research_program_operations   research ops, research program manager
+  institutional_strategy        strategy ops, chief of staff, planning
+  innovation_programs           innovation program lead, pilots, incubation
+  technology_policy             tech policy analyst/manager, digital policy
+  partnerships                  partnerships manager, alliances, ecosystem
+  implementation_leadership     implementation manager, delivery lead,
+                                customer onboarding leadership
+  operations_transformation     process/change manager, ops transformation
+  conventional_pm_po            keep ONE query in the operator's CURRENT
+                                title family as the control lane (rename
+                                the key to match your background)
+
+QUERY CONSTRUCTION RULES
+1. Emit 8-12 queries total, at least 6 distinct families per day.
+2. Posting-shaped, not index-shaped: pair role title with a domain or
+   qualifier ("AI governance program manager remote", not "program
+   manager jobs <PRIMARY_CITY>"). Avoid the words "jobs" and "careers" alone --
+   they surface listicle/index pages.
+3. Respect geography every time: each query carries "remote" or
+   "<PRIMARY_CITY>" (rotate; <COMMUTABLE_AREA> acceptable).
+4. Rotate families day to day so the same 8 queries are not repeated;
+   vary phrasing on repeated families.
+5. Operator-preference lane (EXAMPLE -- edit or remove to match your own
+   priorities): at least one query per day targeting
+   technology-for-good org shapes (nonprofit tech, digital rights,
+   AI safety/governance orgs).
+6. Never include excluded companies in queries. Never construct a query
+   designed to find a specific excluded company.
+
+OUTPUT FORMAT -- exactly this JSON shape, nothing else:
+{"queries": [{"q": "<query>", "family": "<family_key>", "count": 8}, ...]}

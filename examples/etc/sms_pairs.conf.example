@@ -1,0 +1,20 @@
+# sms_pairs.conf -- directed communication policy for inter-agent messaging.
+# Read by shared/lib/sms.py, fresh at every send. FAIL-CLOSED: a missing,
+# unreadable, empty, or malformed file allows nothing, and one malformed
+# non-comment line voids the entire policy (a typo must not silently yield
+# a partial matrix).
+#
+# One directed pair per line: sender -> recipient. Each name must match
+# [a-z][a-z0-9_-]{0,31}; a self-pair voids the policy. sms.py enforces
+# syntax and membership ONLY -- it does not check that a name belongs to a
+# chartered agent, so a misspelled name yields a pair that simply never
+# matches. Charter existence is enforced where it is owned: meet.py refuses
+# to convene an agent with no charter file.
+#
+# install.sh installs this file as /etc/treebeard/sms_pairs.conf if none is
+# present. It authorises nothing: until pairs are added every send is
+# refused and audited as policy-error, which is the expected first-run
+# state, not a fault.
+#
+# agent_a -> agent_b
+# agent_b -> agent_a

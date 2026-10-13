@@ -1,0 +1,5 @@
+#!/bin/sh
+TB="${TREEBEARD_BASE:-/opt/treebeard}"
+export ANVIL_ROOT="${ANVIL_ROOT:-$TB/shared/anvil/data}"
+export TOOLKIT_ROOT="${TOOLKIT_ROOT:-$TB/shared/toolkit}"
+exec "$TB/shared/venv/bin/python3" "$TB/shared/anvil/anvil.py" "$@"

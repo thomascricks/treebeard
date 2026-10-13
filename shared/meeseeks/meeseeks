@@ -1,0 +1,10 @@
+#!/bin/sh
+TB="${TREEBEARD_BASE:-/opt/treebeard}"
+export MEESEEKS_ROOT="${MEESEEKS_ROOT:-$TB/shared/meeseeks/data}"
+export MEESEEKS_LIB="${MEESEEKS_LIB:-$TB/shared/lib}"
+export MEESEEKS_ANVIL_DROPZONE="${MEESEEKS_ANVIL_DROPZONE:-$TB/shared/anvil/data/dropzones/treebeard}"
+export MEESEEKS_TIERS="${MEESEEKS_TIERS:-free,cheap,cheap}"
+export MEESEEKS_CYCLE_CAP="${MEESEEKS_CYCLE_CAP:-8}"
+export MEESEEKS_PROMPT_CAP="${MEESEEKS_PROMPT_CAP:-32000}"
+set -a; . /etc/treebeard/credentials/treebeard.env 2>/dev/null; set +a
+exec "$TB/shared/venv/bin/python3" "$TB/shared/meeseeks/meeseeks.py" "$@"

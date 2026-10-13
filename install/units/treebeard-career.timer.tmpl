@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily career hunter at 05:00 Eastern (before Sun's 06:00 digest)
+Requires=treebeard-career.service
+[Timer]
+OnCalendar=*-*-* 05:00:00 @TB_TZ@
+Persistent=true
+Unit=treebeard-career.service
+[Install]
+WantedBy=timers.target

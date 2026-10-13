@@ -1,0 +1,111 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     routing.conf
+# Install:  $TREEBEARD_ETC/routing.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   REQUIRED
+# Absent:   selection.load_policy raises PolicyError; routing refuses. Sections bands/tier_band/class_floor/weights/selection are required; [perf] is optional (absent => neutral prior for every model).
+# Read by:  shared/lib/selection.py, shared/lib/perf.py
+# Values:   generic operational defaults, shipped as-is
+# ===========================================================================
+# Router selection policy. Declarative; no Python edits to add a tier or class.
+#
+# CAPABILITY IS A FLOOR, NOT A REWARD. A model in a band above the task's
+# requirement is eligible but receives NO score advantage for the excess.
+# Below-floor models are eliminated outright. This is what prevents the
+# frontier bias from reappearing as a scoring artifact.
+#
+# Bands are ORDINAL POLICY CATEGORIES, not measurements. No benchmark has
+# been run. Reassign freely as policy; do not read them as model quality.
+
+[bands]
+# ordered least -> most capable. Adding a band = adding a name here.
+order = basic,standard,advanced
+
+[tier_band]
+# tier -> band. A tier absent here is ELIMINATED from organic routing
+# (it remains reachable via force_tier). Add the seventh tier here when
+# its live identity is confirmed.
+local    = basic
+free     = standard
+cheap    = standard
+frontier = advanced
+advanced_a     = advanced
+advanced_b   = advanced
+
+[class_floor]
+# task class -> MINIMUM band required. Tiers below this are eliminated.
+simple  = basic
+medium  = standard
+complex = advanced
+
+[weights]
+# Base score over surviving candidates. capability is deliberately absent:
+# it is an eliminator, never a scorer.
+#
+# POLICY 2026-08-16 (Operator): functionality and measured quality outrank
+# price. perf is the dominant score term; cost influences close calls and
+# orders comparable candidates, but can no longer hand a task class to the
+# cheapest advanced model outright. perf values come from perf.py (real
+# non-synthetic telemetry, shrunk toward a shared neutral prior) -- with no
+# evidence the perf term is a constant and differentiates nothing, so the
+# score degrades to cost/health ordering while the near-tie band widens
+# enough for personality and exploration to act.
+# 2026-08-30: cost lowered 0.35 -> 0.15. At 0.35 the cost term supplied
+# 0.1247 of the 0.1914 gap between the two leading advanced-band tiers
+# while perf supplied only 0.0667:
+# price, not measured quality, was deciding the complex class, and frontier
+# entered the tie band in 0 of 296 scored decisions. At 0.15 the gap is
+# 0.1201 (< near_tie_epsilon 0.15) so personality affinity selects within
+# the advanced band, while the third advanced tier stays excluded on its
+# real perf deficit.
+cost    = 0.15
+health  = 0.5
+perf    = 1.0
+
+[selection]
+# Candidates whose base score is within near_tie_epsilon of the best form
+# the tie band. Personality affinity ranks within it (step 8); round-robin
+# only when affinity is also tied within affinity_epsilon.
+# Absolute scale for cost scoring: cost >= reference scores 0.0.
+# A POLICY SCALE, not a measured average.
+# Rate scale for SELECTION (USD per Mtok, in/out blended). A policy scale,
+# not a measured average. Per-call dollar cost is still used for the budget
+# hard-stop, telemetry and reporting -- but NOT for near-tie membership,
+# because it varies with prompt length.
+rate_reference_mtok = 20.0
+near_tie_epsilon  = 0.15
+affinity_epsilon  = 0.02
+# Personality selects by WEIGHTED SHARE inside the band, never winner-take-
+# all: draw weight = max(affinity-0.5, 0)^sharpness + floor. Sharpness sets
+# how strongly a preference concentrates share; the floor keeps every
+# qualified band member at a trace share so no comparable model is starved.
+affinity_sharpness = 3.0
+affinity_floor     = 0.001
+# Exploration: probability that a tied/inert-personality decision is given to
+# an UNDER-SAMPLED eligible candidate instead of round-robin, so thin model
+# profiles can accumulate evidence. Operates only inside the legal near-tie
+# band; never resurrects an eliminated model; never overrides a clear
+# personality winner.
+#
+# The floor is an OWNER control: the effective rate is clamped into
+# [explore_rate_min, explore_rate_max]. Treebeard cannot disable exploration by
+# tuning the rate down -- this file is root-owned and not Treebeard-writable.
+explore_rate      = 0.05
+explore_rate_min  = 0.01
+explore_rate_max  = 0.25
+# A candidate counts as under-sampled when its model-profile evidence weight is
+# below this. Asserted-only or absent profiles fall under it; well-measured
+# ones do not. Uncertainty-targeted, not diversity for its own sake.
+explore_weight_threshold = 1.0
+
+[perf]
+# Derived-performance parameters (perf.py). Evidence = NON-SYNTHETIC
+# routing_decisions outcomes + polarity-tagged signals in a rolling window.
+# The prior is identical for every model: it shrinks small samples toward
+# neutral and can never rank models apart by itself.
+window_days = 14
+prior       = 0.75
+prior_n     = 5
+neg_weight  = 0.5    # cost of one negative signal (retry/truncated/empty/reject)
+pos_weight  = 0.25   # credit for one positive signal (validator_pass)
+measured_n  = 10     # attempts before a model's evidence counts as 'measured';
+                     # below this a model remains an exploration target

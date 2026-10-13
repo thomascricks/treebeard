@@ -1,0 +1,10 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     memory_scopes.conf
+# Install:  $TREEBEARD_ETC/memory_scopes.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL
+# Absent:   any agent not listed (or no file) has scope 'own' -- fail-closed. Only 'all' widens.
+# Read by:  shared/lib/subconscious.py
+# Values:   structural: agent = own|all
+# ===========================================================================
+treebeard = all
+moon = all

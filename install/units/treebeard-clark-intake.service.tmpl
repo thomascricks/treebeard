@@ -1,0 +1,11 @@
+[Unit]
+Description=Treebeard Clark forwarded-job-email intake (15-min tick)
+[Service]
+Environment=TREEBEARD_BASE=@TB_BASE@
+Environment=TREEBEARD_ETC=@TB_ETC@
+Type=oneshot
+User=@TB_USER@
+Group=@TB_GROUP@
+EnvironmentFile=@TB_ETC@/credentials/providers.env
+EnvironmentFile=-@TB_ETC@/credentials/treebeard.env
+ExecStart=@TB_BASE@/shared/venv/bin/python3 @TB_BASE@/shared/lib/clark_intake_driver.py

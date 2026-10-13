@@ -1,0 +1,12 @@
+[Service]
+Type=oneshot
+Restart=no
+ProcSubset=all
+SupplementaryGroups=systemd-journal @TB_GROUP@
+ReadWritePaths=@TB_BASE@/shared/status/sun.json @TB_BASE@/shared/memory/dreams
+Environment=PYTHONDONTWRITEBYTECODE=1
+MemoryDenyWriteExecute=no
+ExecStart=
+ExecStart=@TB_BASE@/shared/venv/bin/python @TB_BASE@/sun/agent.py
+ReadWritePaths=@TB_BASE@/shared/memory/subconscious
+ReadWritePaths=@TB_BASE@/shared/telemetry

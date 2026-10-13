@@ -1,0 +1,46 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     agent_policy.conf
+# Install:  $TREEBEARD_ETC/agent_policy.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL (read only on the Will launch path)
+# Absent:   Will denies paid tiers to ordinary agents (fail-closed, whole file; lines are never skipped). NOTE: tiering is cost optimisation, not authorisation -- the fleet-wide TREEBEARD_*_ENABLED gates are the only intended way to disable a provider.
+# Read by:  will.py (Will — deferred, not in this release)
+# Values:   generic profile/tier vocabulary
+# ===========================================================================
+# Per-agent model-tier authorization. Declarative; adding an agent requires
+# NO Python changes -- add an [agent:<name>] section here plus its charter.
+#
+#   [profile:<name>]   reusable role.  paid_tiers = frontier,advanced_a,advanced_b | none
+#   [agent:<name>]     profile = <name>, plus optional inline key overrides.
+#
+# Precedence: [agent:*] inline key > its named profile > DENY.
+# FAIL-CLOSED for ordinary agents: absent, unknown profile, malformed line, or
+# unparseable/unreadable file => no paid tiers. A malformed file fails ENTIRELY;
+# lines are not skipped individually.
+#
+# The governor agent (see the 'governor' file) keeps every paid tier
+# discovered from the router at runtime, current and future, and is not
+# reduced by breakage in this file.
+#
+# NOTE: cost/blast-radius control, NOT a privilege boundary -- the treebeard
+# UNIX user holds every API key. Fleet-wide provider kill-switches are the
+# TREEBEARD_<TIER>_ENABLED environment gates, not this file.
+
+[profile:governor]
+# Placeholder only. The governor is resolved dynamically from router.TIERS;
+# this section is never consulted for gate discovery.
+paid_tiers = none
+
+[profile:standard]
+paid_tiers = advanced_a
+
+[profile:restricted]
+paid_tiers = none
+
+[agent:treebeard]
+profile = governor
+
+[agent:clark]
+profile = restricted
+
+[agent:han]
+profile = restricted

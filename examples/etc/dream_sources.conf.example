@@ -1,0 +1,11 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     dream_sources.conf
+# Install:  $TREEBEARD_ETC/dream_sources.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL
+# Absent:   file missing or agent not listed => sources default to 'subconscious'. Format: <agent> = source+source (subconscious, telemetry, shortterm)
+# Read by:  shared/lib/dream.py
+# Values:   structural
+# ===========================================================================
+treebeard = subconscious+telemetry+shortterm
+clark = subconscious+shortterm
+han = subconscious+shortterm

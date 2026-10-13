@@ -1,0 +1,162 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     model_profiles.toml
+# Install:  $TREEBEARD_ETC/model_profiles.toml   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL
+# Absent:   absent OR malformed file => affinity.load_profiles returns {} and routing affinity is NEUTRAL ('personality-inert'). Omitted dimensions in a present file score neutral.
+# Read by:  shared/lib/affinity.py
+# Values:   EXAMPLE VALUES ONLY -- see note below
+# ===========================================================================
+# NOTE: every value below is basis="asserted" -- one deployment's operator
+# judgement at bootstrap (no benchmark was run). They are NOT shipped defaults.
+# Replace with your own assertions, or let Moon/Dream evidence move entries
+# toward basis="measured". Revision/date fields describe that deployment.
+# Model behavioural profiles, keyed by TIER name.
+#
+# REVISION bootstrap-1 (2026-08-13). Supersedes synthetic-3, which contained
+# TEST FIXTURES and asserted depth values for the three premium tiers invented to
+# exercise the affinity mechanism. Those are segregated, not carried forward.
+#
+# Every value here is basis="asserted": an operator judgement, NOT a
+# measurement. No benchmark has been run on this box. sample_n is deliberately
+# absent -- asserted values take weight from their stated confidence, and
+# fabricating a sample count would launder assertion into evidence.
+#
+# DIMENSIONS ARE OMITTED WHERE NO DEFENSIBLE ASSERTION EXISTS. An omitted
+# dimension scores exactly neutral and contributes nothing. This makes the
+# matrix sparse and UNBALANCED -- the frontier tier carries six dimensions while
+# other tiers carry one to three. That asymmetry reflects what is known, not what the
+# models are, and it means a thinly-profiled model is less steerable by
+# personality. Moon/Dream evidence is expected to fill these gaps and move
+# entries from asserted toward measured.
+#
+# All modes are "match". complement is reserved for a case with a specific
+# defensible argument; none has been established.
+
+revision = "bootstrap-1"
+
+# --- local tier : small on-box model, well characterised, no alias drift ------
+[tier.local.depth]
+value = 0.15
+confidence = 0.6
+mode = "match"
+basis = "asserted"
+# Small local model; multi-step reasoning degrades sharply.
+
+[tier.local.discrimination]
+value = 0.25
+confidence = 0.5
+mode = "match"
+basis = "asserted"
+# Limited capacity to separate subtle cases.
+
+[tier.local.rational_constraint]
+value = 0.35
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+# Instruction adherence weakens as task complexity rises.
+
+# --- free tier ---------------------------------------------------------------
+[tier.free.depth]
+value = 0.75
+confidence = 0.3
+mode = "match"
+basis = "asserted"
+# The provider describes this model as frontier-class and
+# optimized for agentic/coding use. Held conservative at 0.3 confidence: this
+# box has measured nothing, and the prior "mid-capability" framing attached to
+# a floating model alias is withdrawn as unfounded.
+
+# --- cheap tier --------------------------------------------------------------
+[tier.cheap.depth]
+value = 0.70
+confidence = 0.3
+mode = "match"
+basis = "asserted"
+# The provider states this model closely approaches its larger sibling and matches it
+# on simple agent tasks. rational_constraint was considered and OMITTED: it
+# would have rested on family impression, and the ledger stores no response
+# text, so no local evidence of structured output exists to support it.
+
+# --- frontier tier -----------------------------------------------------------
+[tier.frontier.depth]
+value = 0.85
+confidence = 0.6
+mode = "match"
+basis = "asserted"
+
+[tier.frontier.discrimination]
+value = 0.85
+confidence = 0.6
+mode = "match"
+basis = "asserted"
+# Distinguishes near-cases and states uncertainty rather than asserting.
+
+[tier.frontier.rational_constraint]
+value = 0.80
+confidence = 0.5
+mode = "match"
+basis = "asserted"
+
+[tier.frontier.limit_sensitivity]
+value = 0.80
+confidence = 0.5
+mode = "match"
+basis = "asserted"
+# Trained to flag limits and decline; directly observable behaviour.
+
+[tier.frontier.social_model]
+value = 0.70
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+
+[tier.frontier.stress_stability]
+value = 0.75
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+
+# --- advanced_a tier : profiled on OBSERVATION, not on family reputation ------------
+[tier.advanced_a.depth]
+value = 0.75
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+# OBSERVED on this box 2026-08-13: two live calls returned reasoning_content
+# with 109 and 170 reasoning_tokens on near-trivial prompts. Reasoning-model
+# architecture implies deliberate multi-step work before answering.
+
+[tier.advanced_a.concept_persistence]
+value = 0.60
+confidence = 0.3
+mode = "match"
+basis = "asserted"
+# Weaker inference from the same observation: it sustains a chain of thought
+# before responding. Low confidence; one behaviour, two readings.
+#
+# DELIBERATELY NOT CARRIED FORWARD from the synthetic-3 era: novelty 0.75,
+# frame_flexibility 0.70, limit_sensitivity 0.35, narrative_drive 0.65. Those
+# described a predecessor model marketing positioning. The current pin is a different model and
+# none of it has been verified here.
+
+# --- advanced_b tier : date-stamped model pin, stable ---------------------------
+[tier.advanced_b.rational_constraint]
+value = 0.70
+confidence = 0.5
+mode = "match"
+basis = "asserted"
+# RAG/tool-use lineage; strong grounding discipline.
+
+[tier.advanced_b.depth]
+value = 0.55
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+
+[tier.advanced_b.novelty]
+value = 0.30
+confidence = 0.4
+mode = "match"
+basis = "asserted"
+# Conservative, grounded completions.

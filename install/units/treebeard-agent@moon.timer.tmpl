@@ -1,0 +1,9 @@
+[Unit]
+Description=Treebeard Moon weekly config backup
+
+[Timer]
+OnCalendar=Sun *-*-* 05:45:00 @TB_TZ@
+Persistent=true
+
+[Install]
+WantedBy=timers.target

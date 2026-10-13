@@ -1,0 +1,7 @@
+#!/bin/sh
+TB="${TREEBEARD_BASE:-/opt/treebeard}"
+export TOOLBOX_ROOT="${TOOLBOX_ROOT:-$TB/shared/toolbox/data}"
+export TOOLBOX_LIB="${TOOLBOX_LIB:-$TB/shared/lib}"
+export TOOLKIT_ROOT="${TOOLKIT_ROOT:-$TB/shared/toolkit}"
+export TOOLBOX_IMAGE="${TOOLBOX_IMAGE:-localhost/treebeard-toolroom:latest}"
+exec "$TB/shared/venv/bin/python3" "$TB/shared/toolbox/toolbox.py" "$@"

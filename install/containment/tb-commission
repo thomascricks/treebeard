@@ -1,0 +1,154 @@
+#!/usr/bin/python3 -IB
+"""tb-commission <card> -- queue + consume + commission, as ONE root-run command
+(CONTAINMENT T2 revision 4, ruling B; revision 8, ruling P1). From the
+operator's own session, with the operator's existing sudo:
+
+    sudo /usr/local/sbin/tb-commission <card>
+
+  1. board_writer authorize-commission <card>   (as tbctl)
+     Queues a BACKLOG card and records the CONSUME receipt in tbctl-owned
+     state, bound to (card, rev) and to THIS run (pid + kernel start time).
+     From here the authorization is spent: it is valid only while this run
+     lives, and only for the steps below.
+  2. commission_op <card> <consume>             (as treebeard)
+     Creates meeseeks project card-<N>. No board write. An EXISTING card-<N>
+     is adopted only if it is an untouched exact twin of this card's work;
+     otherwise it refuses and this command prints why and the recovery.
+  3. board_writer commission-link <card> <consume>  (as tbctl)
+     Links card-<N> and starts the card (QUEUED -> ACTIVE) at the consumed
+     revision; its receipt names the consume it spends.
+
+AUTHORITY (ruling P1, 2026-10-04): ROOT-GATED AND RECORDED. It runs only
+as root (real and effective uid 0) and drops to tbctl / treebeard with
+setpriv: no sudoers rule names tbctl or this program. Operator identity is
+not yet separated from the service identity (Router 2.0), so this does NOT
+authenticate the operator: anyone who reaches root can run it. Every
+receipt says authority "recorded". Run as any
+other uid it is NOT_IMPLEMENTED (operator authentication deferred to Router
+2.0), logged, and does nothing.
+
+Both programs it calls check, from /proc, that they descend from this run
+(real uid 0, this exact command line) -- which run, not who. Neither accepts
+an environment variable, flag or argument as evidence of origin. If any step
+fails, the authorization is SPENT: re-run tb-commission to authorize again.
+It never retries, and it takes no option. The reflector does not commission.
+Root-owned, outside the treebeard-writable tree.
+"""
+import json
+import os
+import subprocess
+import sys
+
+SETPRIV = "/usr/bin/setpriv"
+PY = "/usr/bin/python3"
+WRITER = "/opt/treebeard/shared/ctl/board_writer.py"
+COMMISSION_OP = "/opt/treebeard/shared/ctl/commission_op.py"
+ENV = {"PATH": "/usr/bin:/bin", "LC_ALL": "C"}
+NOT_IMPLEMENTED = ("NOT_IMPLEMENTED: operator authentication deferred to "
+                   "Router 2.0")
+# who each step runs as, and its supplementary groups: the writer gets none
+# (it refuses any), commissioning keeps treebeard's own (tbaudit reads the
+# receipts). Never root; no new privileges; every capability dropped.
+DROP = {"tbctl": "--clear-groups", "treebeard": "--init-groups"}
+LAST_ERR = [""]
+RECOVERY = """tb-commission: card %(card)d was NOT commissioned. An existing project
+  card-%(card)d is NOT an untouched exact twin of this card's work (the failed
+  check is printed above). Nothing was adopted or changed. Re-running will
+  refuse again -- do not try to make the project pass.
+  Recovery (README, section Containment, Recovery):
+    1. Treat project card-%(card)d as UNTRUSTED (it was not made by a tb-commission
+       authorization of this card's text) and report it to the operator.
+    2. Re-issue the work as a NEW card from this session:
+         sudo setpriv --reuid=tbctl --regid=tbctl --clear-groups --no-new-privs \\
+           /usr/bin/python3 -I -B /opt/treebeard/shared/ctl/board_writer.py task '<the card text>'
+       then:
+         sudo /usr/local/sbin/tb-commission <the new card id>
+    3. Card %(card)d stays QUEUED without a project; the reflector never
+       drives it.
+"""
+
+
+def _log(msg):
+    try:
+        import syslog
+        syslog.openlog("tb-t2", 0, syslog.LOG_AUTH)
+        syslog.syslog(syslog.LOG_WARNING, msg)
+    except Exception:
+        pass
+
+
+def drop_argv(user, script, *args):
+    """setpriv to `user` (fixed: tbctl or treebeard), fail-closed: setpriv
+    exits non-zero and runs nothing if any step of the drop fails."""
+    import pwd
+    pw = pwd.getpwnam(user)
+    return [SETPRIV, "--reuid=%d" % pw.pw_uid, "--regid=%d" % pw.pw_gid,
+            DROP[user], "--no-new-privs", "--inh-caps=-all",
+            "--ambient-caps=-all", "--bounding-set=-all", "--",
+            PY, "-I", "-B", script] + [str(a) for a in args]
+
+
+def run(user, script, *args):
+    p = subprocess.run(drop_argv(user, script, *args),
+                       stdin=subprocess.DEVNULL, capture_output=True,
+                       text=True, env=ENV, cwd="/")
+    sys.stderr.write(p.stderr)
+    LAST_ERR[0] = p.stderr
+    if p.returncode != 0:
+        return None
+    try:
+        return json.loads(p.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        return None
+
+
+def main(argv):
+    f = sys.flags
+    if not (f.isolated and f.dont_write_bytecode):
+        sys.stderr.write("tb-commission: run it as %s (its shebang)\n"
+                         % os.path.realpath(__file__))
+        return 2
+    if os.getuid() != 0 or os.geteuid() != 0:
+        _log("tb-commission refused uid=%d euid=%d: %s"
+             % (os.getuid(), os.geteuid(), NOT_IMPLEMENTED))
+        sys.stderr.write("tb-commission: REFUSED: %s. It runs only as root "
+                         "(`sudo %s <card>` from the operator's session); "
+                         "nothing was done\n"
+                         % (NOT_IMPLEMENTED, os.path.realpath(__file__)))
+        return 2
+    if len(argv) != 1 or not argv[0].isdigit():
+        sys.stderr.write("usage: sudo tb-commission <card>\n")
+        return 2
+    card = int(argv[0])
+    auth = run("tbctl", WRITER, "authorize-commission", card)
+    if auth is None:
+        sys.stderr.write("tb-commission: card %d NOT authorized; nothing was "
+                         "consumed or commissioned\n" % card)
+        return 1
+    digest = auth["receipt"]
+    print("authorized + CONSUMED: card %d rev %s (receipt %s)"
+          % (card, auth["rev"], digest))
+    proj = run("treebeard", COMMISSION_OP, card, digest)
+    if proj is None and "NOT ADOPTED" in LAST_ERR[0]:
+        sys.stderr.write(RECOVERY % {"card": card})
+        return 1
+    if proj is None:
+        sys.stderr.write("tb-commission: project NOT created. Authorization "
+                         "%s is SPENT; re-run tb-commission %d to authorize "
+                         "again\n" % (digest[:12], card))
+        return 1
+    print("project %s %s" % (proj["project"],
+                             "adopted" if proj["adopted"] else "created"))
+    link = run("tbctl", WRITER, "commission-link", card, digest)
+    if link is None:
+        sys.stderr.write("tb-commission: card %d NOT linked. Authorization "
+                         "%s is SPENT; re-run tb-commission %d to authorize "
+                         "again\n" % (card, digest[:12], card))
+        return 1
+    print("commissioned: card %d -> %s, ACTIVE at rev %s (receipt %s)"
+          % (card, link["project"], link["rev"], link["receipt"]))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

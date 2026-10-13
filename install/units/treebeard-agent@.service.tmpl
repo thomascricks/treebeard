@@ -1,0 +1,72 @@
+[Unit]
+Description=Treebeard Agent %i
+After=network.target
+
+[Service]
+Environment=TREEBEARD_BASE=@TB_BASE@
+Environment=TREEBEARD_ETC=@TB_ETC@
+Type=simple
+
+User=%i
+Group=%i
+
+WorkingDirectory=@TB_BASE@/%i
+ReadWritePaths=@TB_BASE@/%i/workspace
+
+# Bug #5 (2026-08-13): shared provider API keys, loaded FIRST so the
+# per-agent file below can still override any value. Tier enable-gates
+# are NOT in this file; the router's default-deny remains authoritative,
+# so a key here does not enable a paid tier.
+EnvironmentFile=@TB_ETC@/credentials/providers.env
+EnvironmentFile=@TB_ETC@/credentials/%i.env
+ExecStart=@TB_BASE@/%i/agent.py
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+MemoryMax=2G
+CPUQuota=200%
+
+Restart=on-failure
+
+StandardOutput=journal
+StandardError=journal
+
+# Drop all Linux capabilities
+CapabilityBoundingSet=
+
+# Clock / kernel / hostname / proc protections
+ProtectClock=yes
+ProtectKernelLogs=yes
+ProtectHostname=yes
+ProtectProc=invisible
+ProcSubset=pid
+
+# File creation hygiene
+UMask=0007
+RestrictSUIDSGID=yes
+
+# Misc tightening
+RestrictRealtime=yes
+RemoveIPC=yes
+SystemCallArchitectures=native
+PrivateUsers=yes
+
+[Install]
+WantedBy=multi-user.target

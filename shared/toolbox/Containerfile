@@ -1,0 +1,9 @@
+# treebeard-toolroom -- the room the toolbox runs tools in.
+# Recovered 2026-08-21 (S2-H8) from the metadata + pip freeze of the
+# production image built 2026-07-03; no Containerfile existed on disk.
+# Base is digest-pinned; the package closure is pinned by the lockfile.
+# Build:  podman build -t localhost/treebeard-toolroom:<tag> -f Containerfile .
+FROM docker.io/library/python:3.12-slim@sha256:86d3e4424d5e963e60594a3a6b4d597cc4d41f5152fe67a97a40dca9ea092475
+COPY requirements-toolroom.lock /tmp/requirements-toolroom.lock
+RUN pip install --no-cache-dir --no-deps -r /tmp/requirements-toolroom.lock \
+ && rm /tmp/requirements-toolroom.lock

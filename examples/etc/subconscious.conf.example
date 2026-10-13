@@ -1,0 +1,11 @@
+# ==== TREEBEARD EXAMPLE CONFIG ==============================================
+# File:     subconscious.conf
+# Install:  $TREEBEARD_ETC/subconscious.conf   (default TREEBEARD_ETC=/etc/treebeard; owner root:treebeard 0640)
+# Status:   OPTIONAL
+# Absent:   salience_threshold defaults to 0.5. Malformed value => default.
+# Read by:  shared/lib/subconscious.py
+# Values:   schema-derived; this file does not exist on the reference deployment
+# ===========================================================================
+# Single tunable. Events with salience below this are not flagged into the
+# subconscious store (the gate decision is still logged).
+salience_threshold = 0.5

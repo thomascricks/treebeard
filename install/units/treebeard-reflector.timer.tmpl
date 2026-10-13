@@ -1,0 +1,11 @@
+[Unit]
+Description=Treebeard reflector tick every 15 minutes
+
+[Timer]
+OnCalendar=*:00/15
+AccuracySec=1min
+Persistent=false
+Unit=treebeard-reflector.service
+
+[Install]
+WantedBy=timers.target
