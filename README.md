@@ -1,4 +1,4 @@
-# Treebeard 1.0 — public edition (research prototype)
+# Treebeard 1.0.1 — public edition (research prototype)
 
 Treebeard is a research prototype of a **governed multi-agent system** built
 around a language-model **router**. Several agents, each a separate Unix
@@ -48,9 +48,9 @@ installation. The resulting tree has not had a full acceptance run.
 - The `sms.py` change was re-tested in a separate installer VM.
 - No full acceptance run has been made on this exact tree.
 
-Rows report RC6 results unless stated. Checks made on this exact tree or its
-code-identical predecessor: the harness (44/0/0), the publication sweep, the
-23-row gate-2 plan run by the operator, and a 6-row maintainer re-run.
+Rows report RC6 results unless stated. Checks made on this exact tree: the
+harness (44/0/0) and the publication sweep. The 23-row gate-2 plan (operator)
+and the 6-row maintainer re-run were made on v1.0's code.
 
 | area | status |
 |---|---|
@@ -551,6 +551,7 @@ this release, except where marked fixed in this tree.
   included.
 - In one acceptance test, Clark's fit review dropped a seeded candidate.
   This has not been diagnosed.
+- The résumé rule set is finite; it is extended as new commentary phrasings are found.
 - **Fresh-install permission defects (designed, deferred past 1.0):**
   - the personality bounds are unreadable to the router;
   - the vector store is not group-writable;
@@ -568,7 +569,7 @@ this release, except where marked fixed in this tree.
 - **Preflight** exits non-zero on every fresh install by design (see
   Install). Earlier acceptance contracts expected exit 0.
 
-**Also fixed in this tree (career-packet suite; gate-2 row I-26):** Employer-facing résumés contain only résumé content: the rendered PDF and text are validated before delivery; Clark's notes, fit comments and warnings go only to the operator's e-mail; if every tailored attempt is rejected, the operator's base résumé is sent to the operator only, labelled UNTAILORED.
+**Also fixed in this tree (career-packet suite; gate-2 row I-26):** Employer-facing résumés are validated by a fixed rule set before delivery (rendered PDF and text); Clark's notes, fit comments and warnings go only to the operator's e-mail; if every tailored attempt is rejected, the operator's base résumé is sent to the operator only, labelled UNTAILORED.
 
 **Long-standing:**
 - Model names can only be changed by editing `router.py`.
@@ -604,7 +605,7 @@ this release, except where marked fixed in this tree.
 
 ## License and status
 
-- **Status:** research prototype, version 1.0, public edition. It is
+- **Status:** research prototype, version 1.0.1, public edition. It is
   published to show architecture, governance and evaluation practice, not
   as supported software.
 - **License:** GPL-3.0-only. See LICENSE.

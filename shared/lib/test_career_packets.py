@@ -946,5 +946,58 @@ class TestDeliverableV2(Base):
         self.assertNotIn("PREVIOUS ATTEMPT", pr)
 
 
+class TestInMarkerCommentary(unittest.TestCase):
+    """v1.0.1: commentary written INSIDE the resume markers. The rule set is
+    finite; each phrasing found is added here and must stay rejected."""
+    PHRASES = (
+        "Note: I emphasized delivery experience for this role.",
+        "Mission selection did not resolve; tailoring anyway.",
+        "Fit: STRONG - strong match for the role.",
+        "One honest flag: no PMP certification.",
+        "As an AI, I cannot verify dates.",
+        "Here is the tailored resume:",
+        "[Insert phone number]",
+        "Tailoring rationale: led with delivery metrics.",
+        "Clark's notes: the role wants PMP.",
+        "Let me know if you'd like a different emphasis.",
+        "P.S. This version leads with delivery.",
+        "Summary of changes: reordered skills.",
+        "Recruiter note: candidate relocating.",
+        "(Tailored for Fixture Co)",
+        "<!-- reviewer: check dates -->",
+        "Why this role fits: overlap in delivery.",
+        "Hope this helps!",
+        "Feel free to adjust the summary.",
+        "This version highlights program delivery.",
+        "Gap: no PMP certification listed.",
+    )
+    LEGIT = (
+        "- Built onboarding programs tailored to new hires",
+        "- Ran gap analysis for vendor contracts",
+        "- Rolled out a notes app across delivery teams",
+        "- Led the release of this version of the billing platform",
+    )
+    CORPUS = CORPUS_RESUME + CORPUS_PROFILE
+
+    def _with(self, line):
+        return GOOD_RESUME.replace("Improved claims", line + "\nImproved claims", 1)
+
+    def test_every_phrasing_is_rejected_by_the_lint(self):
+        self.assertEqual(cp.lint_resume(GOOD_RESUME, self.CORPUS), [])
+        missed = [p for p in self.PHRASES if not cp.lint_resume(self._with(p), self.CORPUS)]
+        self.assertEqual(missed, [])
+
+    def test_every_phrasing_blocks_a_tailored_reply(self):
+        job = {"description": "run programs", "title": "Program Manager"}
+        corpus = {"resume": CORPUS_RESUME, "profile": CORPUS_PROFILE}
+        for p in self.PHRASES:
+            r = cp.build_result(W(self._with(p)), corpus, self.CORPUS, job)
+            self.assertTrue(r.problems, p)
+
+    def test_legitimate_resume_lines_pass(self):
+        flagged = [(ln, cp.lint_resume(self._with(ln), self.CORPUS)) for ln in self.LEGIT]
+        self.assertEqual([f for f in flagged if f[1]], [])
+
+
 if __name__ == "__main__":
     unittest.main()

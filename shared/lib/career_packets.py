@@ -223,9 +223,18 @@ LINT_RULES = (
         r"\b(?:this|the) resume\b|\bthis draft\b|\bthe corpus\b|\bthe operator\b|\bhard rules\b|"
         r"\bmission selection\b", re.I)),
     ("note-label", re.compile(
-        r"^\s*[*_#>]*\s*(?:notes?|n\.b\.|disclaimer|caveat|commentary|explanation|rationale|reminder|"
-        r"(?:honest|fit) (?:flag|note)|tailoring notes?|changes made|key changes|unverified)\b[*_]*\s*[:\-]",
+        r"^\s*[*_#>]*\s*(?:[A-Za-z][\w'\u2019]*\s+)?"
+        r"(?:notes?|n\.b\.|disclaimer|caveat|commentary|explanation|rationale|reminder|"
+        r"(?:honest|fit) (?:flag|note)|tailoring notes?|changes made|key changes|unverified|gaps?|"
+        r"summary of changes)\b[*_]*\s*[:\-]",
         re.I | re.M)),
+    # Post-1.0 CLARK-LINT-GAP-1: the assistant talking to its reader inside the
+    # markers. Corpus wording is still excused (not in NO_CORPUS_ALLOWANCE).
+    ("assistant-voice", re.compile(
+        r"\blet me know\b|\bhope (?:this|it) helps\b|\bfeel free to\b|"
+        r"\bthis version (?:highlights|leads|emphasi[sz]es|focuses|is)\b|"
+        r"^\s*p\.\s?s\.|<!--|[(\[]\s*tailored (?:for|to)\b|^\s*tailored (?:for|to)\b|"
+        r"\bwhy (?:this|the) (?:role|position|job) (?:fits|is a (?:good |strong )?fit)\b", re.I | re.M)),
     ("preamble", re.compile(
         r"^\s*(?:here(?:'s| is) (?:the|your|a)\b|below is\b|sure[,!]|certainly[,!]|of course[,!])", re.I | re.M)),
     ("placeholder", re.compile(
